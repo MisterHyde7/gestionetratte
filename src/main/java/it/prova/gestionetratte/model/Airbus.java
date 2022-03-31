@@ -41,6 +41,11 @@ public class Airbus {
 		super();
 	}
 
+	public Airbus(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Airbus(String codice, String descrizione, Date dataInizioServizio, int passeggeri) {
 		super();
 		this.codice = codice;

@@ -178,7 +178,7 @@ public class TrattaDTO {
 		if (this.stato != null)
 			result.setStato(this.stato);
 		if (this.airbus != null)
-			result.setAirbus(this.airbus.buildAirbusModel());
+			result.setAirbus(this.airbus.buildAirbusModelPerTratta());
 
 		return result;
 	}

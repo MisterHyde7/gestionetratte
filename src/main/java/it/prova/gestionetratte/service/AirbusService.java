@@ -22,4 +22,6 @@ public interface AirbusService {
 
 	List<Airbus> findByExample(Airbus example, Integer pageNo, Integer pageSize, String sortBy);
 
+	List<Airbus> listaAirbusEvidenziandoSovrapposizioni();
+
 }

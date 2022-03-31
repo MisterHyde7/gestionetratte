@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Airbus;
+import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.airbus.AirbusRepository;
 
 @Service
@@ -91,6 +92,36 @@ public class AirbusServiceImpl implements AirbusService {
 			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
 		return repository.findAll(specificationCriteria, paging);
+	}
+
+	@Override
+	public List<Airbus> listaAirbusEvidenziandoSovrapposizioni() {
+
+		boolean conSovrapposizioni = false;
+		List<Airbus> airbusTotali = (List<Airbus>) repository.findAll();
+		List<Airbus> airbusConErrore = new ArrayList<Airbus>();
+
+		for (Airbus airbusItem : airbusTotali) {
+
+			List<Tratta> tratteAirbus = new ArrayList<Tratta>();
+			for (Tratta trattaItem : airbusItem.getTratte()) {
+				tratteAirbus.add(trattaItem);
+			}
+
+			int size = tratteAirbus.size();
+			while (size > 0) {
+				for (int i = 0; i < tratteAirbus.size(); i++) {
+					if ((tratteAirbus.get(size - 1).getOraAtterraggio().isAfter(tratteAirbus.get(i).getOraDecollo())))
+						conSovrapposizioni = true;
+				}
+				if (conSovrapposizioni)
+					break;
+				size--;
+			}
+			if (conSovrapposizioni)
+				airbusConErrore.add(airbusItem);
+		}
+		return airbusConErrore;
 	}
 
 }

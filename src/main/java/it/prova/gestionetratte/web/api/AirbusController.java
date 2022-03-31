@@ -93,4 +93,9 @@ public class AirbusController {
 				airbusService.findByExample(example.buildAirbusModel(), 0, 10, null), false);
 	}
 
+	@GetMapping("/listaAirbusEvidenziandoSovrapposizioni")
+	public List<Airbus> listaAirbusEvidenziandoSovrapposizioni() {
+		return airbusService.listaAirbusEvidenziandoSovrapposizioni();
+	}
+
 }

@@ -38,6 +38,11 @@ public class AirbusDTO {
 		super();
 	}
 
+	public AirbusDTO(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public AirbusDTO(@NotBlank(message = "{codice.notblank}") String codice,
 			@NotBlank(message = "{descrizione.notblank}") String descrizione,
 			@NotNull(message = "{dataInizioServizio.notnull}") Date dataInizioServizio,
@@ -120,6 +125,10 @@ public class AirbusDTO {
 
 	public void setTratte(Set<TrattaDTO> tratte) {
 		this.tratte = tratte;
+	}
+
+	public Airbus buildAirbusModelPerTratta() {
+		return new Airbus(this.id);
 	}
 
 	public Airbus buildAirbusModel() {
