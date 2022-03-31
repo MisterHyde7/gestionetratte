@@ -28,8 +28,8 @@ public class AirbusDTO {
 	@NotNull(message = "{dataInizioServizio.notnull}")
 	private Date dataInizioServizio;
 
-	@NotBlank(message = "{numeroPasseggeri.notblank}")
-	private int numeroPasseggeri;
+	@NotNull(message = "{numeroPasseggeri.notblank}")
+	private Integer numeroPasseggeri;
 
 	@JsonIgnoreProperties(value = { "airbus" })
 	private Set<TrattaDTO> tratte = new HashSet<TrattaDTO>();
@@ -41,7 +41,7 @@ public class AirbusDTO {
 	public AirbusDTO(@NotBlank(message = "{codice.notblank}") String codice,
 			@NotBlank(message = "{descrizione.notblank}") String descrizione,
 			@NotNull(message = "{dataInizioServizio.notnull}") Date dataInizioServizio,
-			@NotBlank(message = "{numeroPasseggeri.notblank}") int numeroPasseggeri) {
+			@NotNull(message = "{numeroPasseggeri.notblank}") int numeroPasseggeri) {
 		super();
 		this.codice = codice;
 		this.descrizione = descrizione;
@@ -52,7 +52,7 @@ public class AirbusDTO {
 	public AirbusDTO(Long id, @NotBlank(message = "{codice.notblank}") String codice,
 			@NotBlank(message = "{descrizione.notblank}") String descrizione,
 			@NotNull(message = "{dataInizioServizio.notnull}") Date dataInizioServizio,
-			@NotBlank(message = "{numeroPasseggeri.notblank}") int numeroPasseggeri) {
+			@NotNull(message = "{numeroPasseggeri.notblank}") int numeroPasseggeri) {
 		super();
 		this.id = id;
 		this.codice = codice;
@@ -64,7 +64,7 @@ public class AirbusDTO {
 	public AirbusDTO(Long id, @NotBlank(message = "{codice.notblank}") String codice,
 			@NotBlank(message = "{descrizione.notblank}") String descrizione,
 			@NotNull(message = "{dataInizioServizio.notnull}") Date dataInizioServizio,
-			@NotBlank(message = "{numeroPasseggeri.notblank}") int numeroPasseggeri, Set<TrattaDTO> tratte) {
+			@NotNull(message = "{numeroPasseggeri.notblank}") int numeroPasseggeri, Set<TrattaDTO> tratte) {
 		super();
 		this.id = id;
 		this.codice = codice;

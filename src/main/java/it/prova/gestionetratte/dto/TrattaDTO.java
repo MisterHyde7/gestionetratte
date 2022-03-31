@@ -39,7 +39,6 @@ public class TrattaDTO {
 	private Stato stato;
 
 	@JsonIgnoreProperties(value = { "tratte" })
-	@NotNull(message = "{airbus.notnull}")
 	private AirbusDTO airbus;
 
 	public TrattaDTO() {
@@ -59,6 +58,20 @@ public class TrattaDTO {
 		this.oraDecollo = oraDecollo;
 		this.oraAtterraggio = oraAtterraggio;
 		this.stato = stato;
+	}
+
+	public TrattaDTO(Long id, @NotBlank(message = "{codice.notblank}") String codice,
+			@NotBlank(message = "{descrizione.notblank}") String descrizione,
+			@NotNull(message = "{data.notnull}") Date data,
+			@NotNull(message = "{oraDecollo.notnull}") LocalTime oraDecollo,
+			@NotNull(message = "{oraAtterraggio.notnull}") LocalTime oraAtterraggio) {
+		super();
+		this.id = id;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.data = data;
+		this.oraDecollo = oraDecollo;
+		this.oraAtterraggio = oraAtterraggio;
 	}
 
 	public TrattaDTO(Long id, @NotBlank(message = "{codice.notblank}") String codice,
@@ -161,7 +174,9 @@ public class TrattaDTO {
 
 	public Tratta buildTrattaModel() {
 		Tratta result = new Tratta(this.id, this.codice, this.descrizione, this.data, this.oraDecollo,
-				this.oraAtterraggio, this.stato);
+				this.oraAtterraggio);
+		if (this.stato != null)
+			result.setStato(this.stato);
 		if (this.airbus != null)
 			result.setAirbus(this.airbus.buildAirbusModel());
 
@@ -173,7 +188,7 @@ public class TrattaDTO {
 				trattaModel.getData(), trattaModel.getOraDecollo(), trattaModel.getOraAtterraggio(),
 				trattaModel.getStato());
 
-		if (includeAirbus)
+		if (includeAirbus && trattaModel.getAirbus() != null)
 			result.setAirbus(AirbusDTO.buildAirbusDTOFromModel(trattaModel.getAirbus(), false));
 
 		return result;

@@ -19,4 +19,6 @@ public interface TrattaService {
 
 	List<Tratta> findByExample(Tratta example, Integer pageNo, Integer pageSize, String sortBy);
 
+	void concludiTratte();
+
 }

@@ -24,7 +24,7 @@ import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 import it.prova.gestionetratte.web.api.exception.IdNotNullForInsertException;
 
 @RestController
-@RequestMapping("api/c")
+@RequestMapping("api/airbus")
 public class AirbusController {
 
 	@Autowired

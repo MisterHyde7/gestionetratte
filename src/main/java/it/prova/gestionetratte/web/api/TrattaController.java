@@ -33,7 +33,7 @@ public class TrattaController {
 
 	@GetMapping
 	public List<TrattaDTO> getAll() {
-		return TrattaDTO.createTrattaDTOListFromModelList(trattaService.listAllElements(true), true);
+		return TrattaDTO.createTrattaDTOListFromModelList(trattaService.listAllElements(false), true);
 	}
 
 	// gli errori di validazione vengono mostrati con 400 Bad Request ma
@@ -89,6 +89,11 @@ public class TrattaController {
 	public List<TrattaDTO> search(@RequestBody TrattaDTO example) {
 		return TrattaDTO.createTrattaDTOListFromModelList(
 				trattaService.findByExample(example.buildTrattaModel(), 0, 10, null), false);
+	}
+
+	@GetMapping("/concludiTratte")
+	public void concludeTratte() {
+		trattaService.concludiTratte();
 	}
 
 }

@@ -1,7 +1,9 @@
 package it.prova.gestionetratte.service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.criteria.Predicate;
 
@@ -14,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionetratte.model.Stato;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.tratta.TrattaRepository;
 
@@ -91,6 +94,17 @@ public class TrattaServiceImpl implements TrattaService {
 			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
 		return repository.findAll(specificationCriteria, paging);
+	}
+
+	@Override
+	public void concludiTratte() {
+		Set<Tratta> tratteDaConcludere = repository.findByStatoEquals(Stato.ATTIVA);
+
+		for (Tratta trattaItem : tratteDaConcludere) {
+			if (trattaItem.getOraAtterraggio().isBefore(LocalTime.now()))
+				trattaItem.setStato(Stato.CONCLUSA);
+		}
+		repository.saveAll(tratteDaConcludere);
 	}
 
 }
