@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.prova.gestionetratte.dto.TrattaDTO;
+import it.prova.gestionetratte.model.Stato;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.service.TrattaService;
 import it.prova.gestionetratte.web.api.exception.IdNotNullForInsertException;
+import it.prova.gestionetratte.web.api.exception.TrattaNonAnnullataException;
 import it.prova.gestionetratte.web.api.exception.TrattaNotFoundException;
 
 @RestController
@@ -76,14 +78,17 @@ public class TrattaController {
 
 		if (tratta == null)
 			throw new TrattaNotFoundException("Tratta not found con id: " + id);
+		if (!tratta.getStato().equals(Stato.ANNULLATA))
+			throw new TrattaNonAnnullataException(
+					"La tratta che si sta provando di eliminare non e' in stato ANNULLATA");
 
 		trattaService.rimuovi(tratta);
 	}
 
 	@PostMapping("/search")
 	public List<TrattaDTO> search(@RequestBody TrattaDTO example) {
-		return TrattaDTO.createTrattaDTOListFromModelList(trattaService.findByExample(example.buildTrattaModel(), 0, 10, null),
-				false);
+		return TrattaDTO.createTrattaDTOListFromModelList(
+				trattaService.findByExample(example.buildTrattaModel(), 0, 10, null), false);
 	}
 
 }

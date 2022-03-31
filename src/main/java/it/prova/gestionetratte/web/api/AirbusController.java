@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.prova.gestionetratte.dto.AirbusDTO;
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.service.AirbusService;
+import it.prova.gestionetratte.web.api.exception.AirbusConTratteAssociateException;
 import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 import it.prova.gestionetratte.web.api.exception.IdNotNullForInsertException;
 
@@ -79,6 +80,9 @@ public class AirbusController {
 
 		if (airbus == null)
 			throw new AirbusNotFoundException("Airbus not found con id: " + id);
+		if (airbus.getTratte() != null)
+			throw new AirbusConTratteAssociateException(
+					"L'Airbus che si sta cercando di eliminare ha delle tratte associate");
 
 		airbusService.rimuovi(airbus);
 	}
